@@ -34,7 +34,7 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
-    @PutMapping("multi")
+    @PostMapping ("multi")
     public List<Product> addProducts(@RequestBody Product[] products) {
         List<Product> result = new ArrayList<>();
         for (Product product : products) {

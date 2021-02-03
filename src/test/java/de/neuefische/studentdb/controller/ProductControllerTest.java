@@ -52,5 +52,32 @@ class ProductControllerTest {
 
     }
 
+    @Test
+    void addProductsTest() {
+
+        // GIVEN
+        String url = "http://localhost:" + port + "/products/multi";
+        Product[] products = new Product[3];
+        products[0] = new Product("1", "Shampoo");
+        products[1] = new Product("2", "Lotion");
+        products[2] = new Product("3", "Deodorant");
+
+        List<Product> expected = new ArrayList<>();
+        expected.add(new Product("1", "Shampoo"));
+        expected.add(new Product("2", "Lotion"));
+        expected.add(new Product("3", "Deodorant"));
+
+        // WHEN
+        ResponseEntity<Product[]> response = testRestTemplate.postForEntity(url, products, Product[].class);
+
+
+        // THEN
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), arrayContaining(
+                new Product("1", "Shampoo"),
+                new Product("2", "Lotion"),
+                new Product("3", "Deodorant")));
+    }
+
 
 }
