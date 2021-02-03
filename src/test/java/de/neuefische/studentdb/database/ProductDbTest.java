@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +17,7 @@ class ProductDbTest {
 
     @Test
     @DisplayName("List Product Test")
-    void addProduct() {
+    void addProductandList() {
 
         // Given
         Product testProduct = new Product("1","Blutwurst");
@@ -34,7 +35,7 @@ class ProductDbTest {
 
     @Test
     @DisplayName("List Two Product Test")
-    void addTwoProducts() {
+    void addTwoProductsandList() {
 
         // Given
         Product testProduct = new Product("1","Blutwurst");
@@ -58,13 +59,49 @@ class ProductDbTest {
     //
     //
 
-    @Test
-    void getProductList() {
-    }
-
 
 
     @Test
+    @DisplayName("Get Product ID")
     void getProductByID() {
+
+
+        //Given
+        ProductDb productDb = new ProductDb();
+        productDb.addProduct(new Product("11", "Tofu"));
+        productDb.addProduct(new Product("13", "Potato"));
+
+
+        //When
+        Optional<Product> productOptional = productDb.getProductByID("11");
+
+
+        //Then
+        assertThat(productOptional.get(), is(new Product("11", "Tofu")));
+
     }
+
+
+
+    @Test
+    @DisplayName("Get Product ID non existent")
+    void getProductByIDNonExistent() {
+
+
+        //Given
+        ProductDb productDb = new ProductDb();
+        productDb.addProduct(new Product("11", "Tofu"));
+        productDb.addProduct(new Product("13", "Potato"));
+
+
+        //When
+        Optional<Product> productOptional = productDb.getProductByID("22");
+
+
+        //Then
+        assertTrue(productOptional.isEmpty());
+
+    }
+
+
 }
